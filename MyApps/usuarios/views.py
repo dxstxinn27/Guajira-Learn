@@ -33,6 +33,30 @@ class EstudianteLoginView(APIView):
         except Estudiante.DoesNotExist:
             print("Estudiante no encontrado.")
             return Response({"message": "Estudiante no encontrado"}, status=status.HTTP_404_NOT_FOUND)
+        
+class DocenteLoginView(APIView):
+    def post(self, request):
+        correo = request.data.get('correo')
+        contraseña = request.data.get('password')
+
+        try:
+            docente = Docente.objects.get(correo=correo)
+            
+            # Imprimir los valores para verificar la comparación
+            print(f"Contraseña ingresada: {contraseña}")
+            print(f"Contraseña almacenada: {docente.contraseña}")
+
+            # Comparación directa de texto plano
+            if contraseña == docente.contraseña:
+                print("Contraseña correcta.")
+                return Response({"message": "Autenticado correctamente"}, status=status.HTTP_200_OK)
+            else:
+                print("Contraseña incorrecta.")
+                return Response({"message": "Contraseña incorrecta"}, status=status.HTTP_401_UNAUTHORIZED)
+                
+        except Docente.DoesNotExist:
+            print("Docente no encontrado.")
+            return Response({"message": "Docente no encontrado"}, status=status.HTTP_404_NOT_FOUND)
 
 class DocenteList(APIView):
 

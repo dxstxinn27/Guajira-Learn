@@ -50,7 +50,7 @@ class Docente(models.Model):
     nombre = models.CharField(max_length=15, help_text="Nombre del docente")
     apellido = models.CharField(max_length=15, help_text="Apellido del docente")
     numero_id = models.IntegerField(unique=True, help_text="Número de identificación del docente")
-    asignatura = models.ManyToManyField(Asignatura, help_text="Asignaturas que dicta")
+    asignatura = models.ForeignKey(Asignatura, on_delete=models.CASCADE, help_text="Asignaturas que dicta")
     correo = models.EmailField(unique=True, help_text="Correo del docente")
     contraseña = models.CharField(max_length=15, help_text="Contraseña del docente")
 
